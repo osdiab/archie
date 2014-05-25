@@ -1,11 +1,14 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving, TypeSynonymInstances, FlexibleInstances #-}
 
-module Archie (archie) where
+module Archie (Reference, JSValue, JSVal) where
 
-import Clay
+import Clay.Property
+import Clay.Selector
 import qualified Data.Text as Text
 
-newtype Reference = Reference Selector
+newtype ReferenceVal = ReferenceVal Selector
+  deriving (Show)
+newtype Reference = Reference ReferenceVal
   deriving (Show, Val)
 
 newtype JSValue = JSValue { unJSValue :: String }
@@ -14,12 +17,8 @@ newtype JSValue = JSValue { unJSValue :: String }
 class JSVal a where
   valueJS :: a -> JSValue
 
-instance Val Selector where
-  value a = value $ Literal $ Text.pack "inherit"
+instance Val ReferenceVal where
+  value _ = value $ Literal $ Text.pack "inherit"
 
 instance JSVal Reference where
   valueJS a = JSValue { unJSValue = show a ++ ".attr()" }
-
-archie :: IO ()
-archie = return ()
-
