@@ -22,6 +22,7 @@ library
     Archie
   build-depends:
     base < 5
+   ,text
    ,clay
    ,text
 
@@ -37,4 +38,6 @@ test-suite test-archie
    ,QuickCheck > 2.5
    ,hspec
    ,archie
+   ,clay
+   ,text
   ghc-options: -Wall

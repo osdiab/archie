@@ -1,6 +1,7 @@
+-- TODO remove these somehow
 {-# LANGUAGE GeneralizedNewtypeDeriving, TypeSynonymInstances, FlexibleInstances #-}
 
-module Archie (Reference, JSValue, JSVal) where
+module Archie (Reference, ReferenceVal(..), JSValue, JSVal) where
 
 import Clay.Property
 import Clay.Selector
@@ -20,5 +21,6 @@ class JSVal a where
 instance Val ReferenceVal where
   value _ = value $ Literal $ Text.pack "inherit"
 
+-- TODO replace the dummy "attr()" with a type for JS conversion
 instance JSVal Reference where
   valueJS a = JSValue { unJSValue = show a ++ ".attr()" }
