@@ -1,26 +1,12 @@
--- TODO remove these somehow
-{-# LANGUAGE GeneralizedNewtypeDeriving, TypeSynonymInstances, FlexibleInstances #-}
+module Archie (Stylesheet, Statement, AtRule, Ruleset, Declaration, Property, Value) where
 
-module Archie (Reference, ReferenceVal(..), JSValue, JSVal) where
-
-import Clay.Property
-import Clay.Selector
-import qualified Data.Text as Text
-
-newtype ReferenceVal = ReferenceVal Selector
-  deriving (Show)
-newtype Reference = Reference ReferenceVal
-  deriving (Show, Val)
-
-newtype JSValue = JSValue { unJSValue :: String }
-  deriving (Show)
-
-class JSVal a where
-  valueJS :: a -> JSValue
-
-instance Val ReferenceVal where
-  value _ = value $ Literal $ Text.pack "inherit"
-
--- TODO replace the dummy "attr()" with a type for JS conversion
-instance JSVal Reference where
-  valueJS a = JSValue { unJSValue = show a ++ ".attr()" }
+newtype Stylesheet = Stylesheet [Statement]
+data Statement =  RulesetSt Ruleset | AtRuleSt AtRule
+newtype AtRule = AtRule String -- TODO: change to real value or worry later
+data Ruleset = Ruleset (Maybe Selector) [Declaration]
+data Selector = Selector Sel | PseudoClass Sel Pseudo
+type Sel = String
+type Pseudo = String
+data Declaration = Declaration Property Value
+newtype Property = Property String
+newtype Value = Value String -- TODO: change to real value
