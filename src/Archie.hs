@@ -9,4 +9,6 @@ type Sel = String
 type Pseudo = String
 data Declaration = Declaration Property Value
 newtype Property = Property String
-newtype Value = Value String -- TODO: change to real value
+data Value = Num Double | Int Integer | Perc Double | Dim Double Dimension
+           | Str String | Uri String | Hash String -- TODO: Add other values as needed
+data Dimension = Px | Em | Rem | In | Cm | Mm | Pt | Pc | Ex | Ch | Vh | Vw | Vmin
