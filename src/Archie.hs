@@ -46,6 +46,16 @@ class CSSRenderable a where
 class JSRenderable a where
   js :: a -> String
 
+instance CSSRenderable (Selector) where
+  css (Selector sel) = sel
+  css (PseudoClass sel pseudo) = sel ++ ":" ++ pseudo
+
+instance CSSRenderable (Declaration) where
+  css (Declaration prop val) = (css prop) ++ ": " ++ (css val) ++ ";\n"
+
+instance CSSRenderable (Property) where
+  css (Property a) = a
+
 instance CSSRenderable (Dimension) where
   css Px = "px"
   css Em = "em"
