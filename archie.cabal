@@ -23,7 +23,6 @@ library
   build-depends:
     base < 5
    ,text
-   ,clay
    ,text
 
   default-language: Haskell2010
@@ -38,6 +37,5 @@ test-suite test-archie
    ,QuickCheck > 2.5
    ,hspec
    ,archie
-   ,clay
    ,text
   ghc-options: -Wall

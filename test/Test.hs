@@ -4,8 +4,6 @@ import Test.Hspec
 import Test.QuickCheck
 
 import Archie
-import Clay
-import Clay.Selector
 import qualified Data.Text as Text
 
 main :: IO ()
