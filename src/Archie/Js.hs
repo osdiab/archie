@@ -1,5 +1,7 @@
 module Archie.Js (
-  JSRenderable) where
+  JSRenderable,
+  js
+  ) where
 
 import Archie.Types
 

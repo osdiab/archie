@@ -1,5 +1,7 @@
 module Archie.Css (
-  CSSRenderable) where
+  CSSRenderable,
+  css
+  ) where
 
 import Archie.Types
 
