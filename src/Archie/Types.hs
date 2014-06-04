@@ -10,20 +10,32 @@ module Archie.Types (
   Pseudo,
   Property(..),
   Value(..),
+  DynamicValue(..),
   Dimension(..)) where
 
 newtype Stylesheet = Stylesheet [Statement]
+
 data Statement =  RulesetSt Ruleset
+
                -- TODO: support | AtRuleSt AtRule
 -- newtype AtRule = AtRule String -- TODO: change to real value or worry later
+
 data Ruleset = Ruleset (Maybe Selector) Declarations
+
 newtype Declarations = Declarations [Declaration]
+
 data Selector = Selector Sel
               | PseudoClass Sel Pseudo
+
 type Sel = String
+
 type Pseudo = String
+
 data Declaration = Declaration Property Value
+                 | DynDeclaration Property DynamicValue
+
 newtype Property = Property String
+
 data Value = IntVal Integer
            | FloatVal Double
            | PercentageVal Double
@@ -31,6 +43,10 @@ data Value = IntVal Integer
            | StringVal String
            | UriVal String
            | HashVal String -- TODO: Add other values as needed
+
+-- For JavaScript generation
+data DynamicValue = DynamicValue Property Selector
+
 data Dimension = Px
                | Em
                | Rem

@@ -1,6 +1,6 @@
 module Archie (
     renderCss,
---    renderJs
+    renderJs
     ) where
 
 import Archie.Types
@@ -10,5 +10,5 @@ import Archie.Js
 renderCss :: Stylesheet -> String
 renderCss stylesheet = css stylesheet
 
--- renderJs :: Stylesheet -> String
--- renderJs stylesheet = js stylesheet
+renderJs :: Stylesheet -> String
+renderJs stylesheet = js stylesheet
