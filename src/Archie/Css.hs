@@ -6,17 +6,25 @@ import Archie.Types
 class CSSRenderable a where
   css :: a -> String
 
-instance CSSRenderable (Selector) where
+instance CSSRenderable Ruleset where
+  css (Ruleset (Nothing) decls) = "{" ++ (css decls) ++ "}"
+  css (Ruleset (Just sel) decls) = (css sel) ++ (css $ Ruleset Nothing decls)
+
+instance CSSRenderable Declarations where
+  css (Declarations (decl:decls)) = (css decl) ++ (css $ Declarations decls)
+  css (Declarations []) = ""
+
+instance CSSRenderable Selector where
   css (Selector sel) = sel
   css (PseudoClass sel pseudo) = sel ++ ":" ++ pseudo
 
-instance CSSRenderable (Declaration) where
+instance CSSRenderable Declaration where
   css (Declaration prop val) = (css prop) ++ ": " ++ (css val) ++ ";\n"
 
-instance CSSRenderable (Property) where
+instance CSSRenderable Property where
   css (Property a) = a
 
-instance CSSRenderable (Dimension) where
+instance CSSRenderable Dimension where
   css Px = "px"
   css Em = "em"
   css Rem = "rem"
@@ -27,10 +35,11 @@ instance CSSRenderable (Dimension) where
   css Pc = "pc"
   css Ex = "ex"
   css Ch = "ch"
+  css Vh = "vh"
   css Vw = "vw"
   css Vmin = "vmin"
 
-instance CSSRenderable (Value) where
+instance CSSRenderable Value where
   css (IntVal num) = show num
   css (DoubleVal num) = show num
   css (PercentageVal num) = (show num) ++ "%"
