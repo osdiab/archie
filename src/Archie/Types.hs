@@ -3,6 +3,7 @@ module Archie.Types (
   Statement(..),
   AtRule(..),
   Ruleset(..),
+  Declarations(..),
   Declaration(..),
   Selector(..),
   Sel,
@@ -15,7 +16,8 @@ newtype Stylesheet = Stylesheet [Statement]
 data Statement =  RulesetSt Ruleset
                | AtRuleSt AtRule
 newtype AtRule = AtRule String -- TODO: change to real value or worry later
-data Ruleset = Ruleset (Maybe Selector) [Declaration]
+data Ruleset = Ruleset (Maybe Selector) Declarations
+newtype Declarations = Declarations [Declaration]
 data Selector = Selector Sel
               | PseudoClass Sel Pseudo
 type Sel = String
