@@ -21,7 +21,7 @@ instance JSRenderable Ruleset where
   js (Ruleset (Just sel) decls) = "rules.push(function(cause) {" ++
                                     "var $el = " ++ js sel ++ ";" ++
                                     js (Ruleset Nothing decls) ++
-                                  "};"
+                                  "});"
 
 instance JSRenderable Declarations where
   js (Declarations decls) = concat $ map js decls

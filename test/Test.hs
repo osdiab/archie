@@ -36,7 +36,7 @@ main = hspec $ describe "Testing Archie" $ do
       let ruleset = Ruleset (Just selector) (Declarations [declaration])
       let statement = RulesetSt ruleset
       let sheet = Stylesheet [statement]
-      renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');};"
+      renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');});"
 
     it "Can generate a single dynamic style rule" $ do
       let selector = Selector "#container"
@@ -45,4 +45,4 @@ main = hspec $ describe "Testing Archie" $ do
       let statement = RulesetSt ruleset
       let sheet = Stylesheet [statement]
       renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
-                                            "$el.css('width', $('window').css('width'));};"
+                                            "$el.css('width', $('window').css('width'));});"
