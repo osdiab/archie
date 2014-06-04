@@ -29,7 +29,7 @@ instance CSSRenderable Selector where
   css (PseudoClass sel pseudo) = sel ++ ":" ++ pseudo
 
 instance CSSRenderable Declaration where
-  css (Declaration prop val) = (css prop) ++ ": " ++ (css val) ++ ";\n"
+  css (Declaration prop val) = (css prop) ++ ": " ++ (css val) ++ ";"
 
 instance CSSRenderable Property where
   css (Property a) = a
