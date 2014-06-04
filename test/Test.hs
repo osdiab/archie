@@ -40,9 +40,23 @@ main = hspec $ describe "Testing Archie" $ do
 
     it "Can generate a single dynamic style rule" $ do
       let selector = Selector "#container"
-      let declaration = DynDeclaration (Property "width") (DynamicValue (Property "width") (Selector "window"))
+      let declaration = DeclarationJS (Property "width")
+                          (ValueJS Nothing
+                            (Property "width") (Selector "body"))
       let ruleset = Ruleset (Just selector) (Declarations [declaration])
       let statement = RulesetSt ruleset
       let sheet = Stylesheet [statement]
       renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
-                                            "$el.css('width', $('window').css('width'));});"
+                                            "$el.css('width', $('body').css('width'));});"
+
+    it "Can generate a single dynamic style rule with a function applied" $ do
+      let selector = Selector "#container"
+      let declaration = DeclarationJS (Property "width")
+                          (ValueJS (Just (Function "function(val){return val/2}"))
+                            (Property "width") (Selector "body"))
+      let ruleset = Ruleset (Just selector) (Declarations [declaration])
+      let statement = RulesetSt ruleset
+      let sheet = Stylesheet [statement]
+      renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
+                                            "$el.css('width', (function(val){return val/2})" ++
+                                            "($('body').css('width')));});"

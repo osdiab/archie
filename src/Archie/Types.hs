@@ -10,7 +10,8 @@ module Archie.Types (
   Pseudo,
   Property(..),
   Value(..),
-  DynamicValue(..),
+  ValueJS(..),
+  Function(..),
   Dimension(..)) where
 
 newtype Stylesheet = Stylesheet [Statement]
@@ -32,7 +33,7 @@ type Sel = String
 type Pseudo = String
 
 data Declaration = Declaration Property Value
-                 | DynDeclaration Property DynamicValue
+                 | DeclarationJS Property ValueJS
 
 newtype Property = Property String
 
@@ -45,7 +46,11 @@ data Value = IntVal Integer
            | HashVal String -- TODO: Add other values as needed
 
 -- For JavaScript generation
-data DynamicValue = DynamicValue Property Selector
+data ValueJS = ValueJS (Maybe Function) Property Selector
+
+-- Function name can be something like "divideByTwo", where
+-- divideByTwp = function(val){ return val / 2; }
+data Function = Function String
 
 data Dimension = Px
                | Em

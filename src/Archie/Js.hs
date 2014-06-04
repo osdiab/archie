@@ -33,7 +33,12 @@ instance JSRenderable Selector where
 instance JSRenderable Declaration where
   js decl =
     case decl of
-      DynDeclaration prop (DynamicValue otherProp otherSel) ->
-        "$el.css('" ++ css prop ++ "', " ++
-        js otherSel ++ ".css('" ++ css otherProp ++ "'));"
+      DeclarationJS prop (ValueJS maybeF otherProp otherSel) ->
+        case maybeF of
+          Just (Function fn) ->
+            "$el.css('" ++ css prop ++ "', (" ++ fn ++ ")(" ++
+            js otherSel ++ ".css('" ++ css otherProp ++ "')));"
+          Nothing ->
+            "$el.css('" ++ css prop ++ "', " ++
+            js otherSel ++ ".css('" ++ css otherProp ++ "'));"
       _ -> ""
