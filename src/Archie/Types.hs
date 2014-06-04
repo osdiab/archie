@@ -25,7 +25,7 @@ type Pseudo = String
 data Declaration = Declaration Property Value
 newtype Property = Property String
 data Value = IntVal Integer
-           | DoubleVal Double
+           | FloatVal Double
            | PercentageVal Double
            | DimensionVal Double Dimension
            | StringVal String

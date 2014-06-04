@@ -4,6 +4,7 @@ module Archie.Css (
   ) where
 
 import Archie.Types
+import Archie.Show
 
 class CSSRenderable a where
   css :: a -> String
@@ -50,9 +51,9 @@ instance CSSRenderable Dimension where
 
 instance CSSRenderable Value where
   css (IntVal num) = show num
-  css (DoubleVal num) = show num
-  css (PercentageVal num) = (show num) ++ "%"
-  css (DimensionVal num dim) = (show num) ++ (css dim)
+  css (FloatVal num) = showCssFloat num
+  css (PercentageVal num) = (showCssFloat num) ++ "%"
+  css (DimensionVal num dim) = (showCssFloat num) ++ (css dim)
   css (StringVal str) = str
   css (UriVal str) = str
   css (HashVal str) = str
