@@ -6,6 +6,13 @@ import Archie.Types
 class CSSRenderable a where
   css :: a -> String
 
+instance CSSRenderable Stylesheet where
+  css (Stylesheet (st:sts)) = (css st) ++ (css $ Stylesheet sts)
+  css (Stylesheet []) = ""
+
+instance CSSRenderable Statement where
+  css (RulesetSt ruleset) = css ruleset
+
 instance CSSRenderable Ruleset where
   css (Ruleset (Nothing) decls) = "{" ++ (css decls) ++ "}"
   css (Ruleset (Just sel) decls) = (css sel) ++ (css $ Ruleset Nothing decls)
