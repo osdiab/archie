@@ -8,6 +8,8 @@ import Archie.Types
 import Archie.Constants
 import qualified Data.Text as Text
 
+import Demo
+
 main :: IO ()
 main = hspec $ describe "Testing Archie" $ do
 
@@ -60,3 +62,5 @@ main = hspec $ describe "Testing Archie" $ do
       renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
                                             "$el.css('width', (function(val){return val/2})" ++
                                             "($('body').css('width')));});"
+
+  runDemo
