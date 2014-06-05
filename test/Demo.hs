@@ -38,8 +38,19 @@ runDemo = do
       let statement3 = RulesetSt ruleset3
 
       let sheet = Stylesheet [statement1, statement2, statement3]
+
+      --Stylesheet [
+      --  Rule $ St $ (Sel "#right") Ds [
+      --                    D (P "width") (V 200 Px),
+      --                    D (P "height") (V 200 Px),
+      --                  ],
+      --  Rule $ St $ (Sel "#left") Ds [
+      --                    D (P "width") (V 200 Px),
+      --                    D (P "height") (V 200 Px),
+      --                  ]
+      --]
       
-      --renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
-      --                                      "$el.css('width', (function(val){return val/2})" ++
-      --                                      "($('body').css('width')));});"
+      renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
+                                            "$el.css('width', (function(val){return val/2})" ++
+                                            "($('body').css('width')));});"
       renderCss sheet `shouldBe` "#container{width: 960px;}"

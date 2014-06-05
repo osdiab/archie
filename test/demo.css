@@ -1,25 +1,46 @@
-#left, #right, #middle {
+body {
+  background: #ACC9A4;
+  color: #666666;
+}
+
+#left, #right, #middle, #top {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   overflow: auto;
+  padding: 12px 20px;
+}
+
+#top {
+  height: 60px;
+  bottom: auto;
+  font-size: 26px;
+  text-transform: uppercase;
+  font-weight: lighter;
+  background-color: #fff;
 }
 
 #left {
+  top: inherit;
   width: 200px;
   right: auto;
-  border-right: 1px solid #999;
+  border-right: 1px solid #ddd;
+  color: inherit;
 }
 
 #right {
+  top: inherit;
   width: 200px;
   left: auto;
-  border-left: 1px solid #999;
+  border-left: 1px solid #ddd;
+  color: inherit;
 }
 
 #middle {
+  top: inherit;
   left: inherit;
   right: inherit;
+  background-color: inherit;
 }
