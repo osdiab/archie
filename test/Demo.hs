@@ -12,29 +12,34 @@ runDemo = do
   describe "demo CSS and JS" $ do
     --describe "generates correct CSS" $
 
-    describe "generates correct JS" $
+    it "Can generate three column fixed layout" $ do
       let selector1 = Selector "#left"
-      let declaration1 = DeclarationJS (Property "width")
-                          (ValueJS (Just (Function "function(val){return val/2}"))
-                            (Property "width") (Selector "body"))
-      let ruleset1 = Ruleset (Just selector) (Declarations [declaration1])
+      let declaration1a = Declaration (Property "width") (DimensionVal 200 Px)
+      let declaration1b = Declaration (Property "right") (StringVal "auto")
+      let declaration1c = Declaration (Property "border-right") (StringVal "1px solid #999")
+      let ruleset1 = Ruleset (Just selector1) (Declarations [declaration1a, declaration1b, declaration1c])
       let statement1 = RulesetSt ruleset1
 
-      let selector = Selector "#middle"
-      let declaration2 = DeclarationJS (Property "width")
-                          (ValueJS (Just (Function "function(val){return val/2}"))
-                            (Property "width") (Selector "body"))
-      let ruleset2 = Ruleset (Just selector) (Declarations [declaration2])
+      let selector2 = Selector "#right"
+      let declaration2a = Declaration (Property "width") (DimensionVal 200 Px)
+      let declaration2b = Declaration (Property "left") (StringVal "auto")
+      let declaration2c = Declaration (Property "border-left") (StringVal "1px solid #999")
+      let ruleset2 = Ruleset (Just selector2) (Declarations [declaration2a, declaration2b, declaration2c])
       let statement2 = RulesetSt ruleset2
 
-      let selector = Selector "#right"
-      let declaration3 = DeclarationJS (Property "width")
-                          (ValueJS (Just (Function "function(val){return val/2}"))
-                            (Property "width") (Selector "body"))
-      let ruleset3 = Ruleset (Just selector) (Declarations [declaration3])
+      let selector3 = Selector "#middle"
+      let declaration3a = DeclarationJS (Property "left")
+                          (ValueJS Nothing
+                            (Property "width") (Selector "#left"))
+      let declaration3b = DeclarationJS (Property "right")
+                          (ValueJS Nothing
+                            (Property "width") (Selector "#right"))
+      let ruleset3 = Ruleset (Just selector3) (Declarations [declaration3a, declaration3b])
       let statement3 = RulesetSt ruleset3
 
       let sheet = Stylesheet [statement1, statement2, statement3]
-      renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
-                                            "$el.css('width', (function(val){return val/2})" ++
-                                            "($('body').css('width')));});"
+      
+      --renderJs sheet `shouldBe` jsPrefix ++ "rules.push(function(cause) {var $el = $('#container');" ++
+      --                                      "$el.css('width', (function(val){return val/2})" ++
+      --                                      "($('body').css('width')));});"
+      renderCss sheet `shouldBe` "#container{width: 960px;}"

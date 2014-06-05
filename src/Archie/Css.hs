@@ -30,6 +30,7 @@ instance CSSRenderable Selector where
 
 instance CSSRenderable Declaration where
   css (Declaration prop val) = (css prop) ++ ": " ++ (css val) ++ ";"
+  css (DeclarationJS prop _) = (css prop) ++ ": inherit;"
 
 instance CSSRenderable Property where
   css (Property a) = a
