@@ -9,6 +9,9 @@
   <body>
     <div id="top">
       Archie
+      <button id="expander" class="btn btn-default pull-right">
+        Expand
+      </button>
     </div>
     <div id="left">
       Dark sidebar on the left
@@ -19,5 +22,29 @@
     <div id="right">
       Dark sidebar on the right
     </div>
+    <script type="text/javascript">
+      var shadeRGBColor = function(color, percent) {
+          var f=color.split(","),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=parseInt(f[0].slice(4)),G=parseInt(f[1]),B=parseInt(f[2]);
+          return "rgb("+(Math.round((t-R)*p)+R)+","+(Math.round((t-G)*p)+G)+","+(Math.round((t-B)*p)+B)+")";
+      }
+
+      var shadeColorLight = function(color) {
+          return shadeRGBColor(color, 0.5);
+      }
+
+      $(function() {
+        $("#expander").click(function() {
+          $("#top").animate({
+            height: 100
+          });
+          // , {
+          //   step: function() {
+          //     $(this).trigger('DOMSubtreeModified');
+          //   }
+          // }
+        }); 
+      });
+
+    </script>
   </body>
 </html>

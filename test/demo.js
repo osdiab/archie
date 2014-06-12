@@ -1,11 +1,16 @@
-var shadeRGBColor = function(color, percent) {
-    var f=color.split(","),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=parseInt(f[0].slice(4)),G=parseInt(f[1]),B=parseInt(f[2]);
-    return "rgb("+(Math.round((t-R)*p)+R)+","+(Math.round((t-G)*p)+G)+","+(Math.round((t-B)*p)+B)+")";
-}
-
-var shadeColorLight = function(color) {
-    return shadeRGBColor(color, 0.5);
-}
+// $(function(){
+//     observers.push(new WebKitMutationObserver(function (mutations) {
+//       mutations.forEach(function(mutation) {
+//         updateReferences({
+//             subtree: true
+//         });
+//       });
+//     }).observe($('#top')[0], {
+//         attributes: true, 
+//         subtree: false,
+//         childList: false,
+//         bubbles: false }));
+// });
 
 
 var SUBTREE = 0;
@@ -16,7 +21,7 @@ var updateReferences = function (cause) {
         f(cause);
     });
 };
-$(document).on('DOMSubtreeModified *', function () {
+$(document).on('DOMSubtreeModified', function () {
     updateReferences({
         subtree: true
     });
@@ -28,6 +33,7 @@ $(window).resize(function () {
 });
 rules.push(function (cause) {
     var $el = $('#top');
+    $el.css('color', $('#main').css('background-color'));
 });
 rules.push(function (cause) {
     var $el = $('#left');
